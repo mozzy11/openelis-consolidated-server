@@ -1,7 +1,4 @@
 version: '3.6'
-
-
-
 services:       
     # # Hapi-FHIR -  SHR
     shr-hapi-fhir:
@@ -39,22 +36,18 @@ services:
             - hapi-fhir-db:/var/lib/postgresql/data
 
    #FHIR Pipeline
-    # pipeline-controller:
-    #     image: us-docker.pkg.dev/cloud-build-fhir/fhir-analytics/main:latest
-    #     container_name: pipeline-controller
-    #     volumes:
-    #         - ./configs/fhirpipes/config:/app/config:ro
-    #         - ./configs/fhirpipes/dwh:/dwh
-    #     environment:
-    #         - JAVA_OPTS=-Xms7g -Xmx7g
-    #     ports:
-    #         - '8095:8080'         
-     
-                
-
+    pipeline-controller:
+        image: us-docker.pkg.dev/cloud-build-fhir/fhir-analytics/main:latest
+        container_name: pipeline-controller
+        volumes:
+           - ./configs/fhirpipes/config:/app/config:ro
+           - ./configs/fhirpipes/dwh:/dwh
+        environment:
+           - JAVA_OPTS=-Xms7g -Xmx7g
+        ports:
+           - '8095:8080'         
         
 volumes:
-  oe-db-data:
   key_trust-store-volume:
   certs-vol:
   keys-vol:
