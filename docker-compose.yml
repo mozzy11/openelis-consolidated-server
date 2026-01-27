@@ -39,6 +39,7 @@ services:
     pipeline-controller:
         image: us-docker.pkg.dev/cloud-build-fhir/fhir-analytics/main:latest
         container_name: pipeline-controller
+        platform: linux/amd64
         volumes:
            - ./configs/fhirpipes/config:/app/config:ro
            - ./configs/fhirpipes/dwh:/dwh
