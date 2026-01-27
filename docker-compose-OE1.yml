@@ -56,7 +56,7 @@ services:
             - DB_SUPERUSER_PASSWORD=${ADMIN_PASSWORD}   
         volumes:
               # preserves the database between containers
-            - ./configs/openelis/database/data:/var/lib/postgresql/data                
+            - db-data:/var/lib/postgresql/data                
 
         logging: *local-logging    
         networks:
