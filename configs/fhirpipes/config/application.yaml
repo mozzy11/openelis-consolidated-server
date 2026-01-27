@@ -22,7 +22,7 @@ fhirdata:
   # 172.17.0.1 is an example docker network interface ip address;
   # `hapi-server` is another docker example where a container with that name is
   # running on the same docker network.
-  fhirServerUrl: "http://gateway/openmrs/ws/fhir2/R4"
+  fhirServerUrl: "http://fhir.openelis.org:8081"
   fhirServerUserName: "admin"
   fhirServerPassword: "Admin123"
   # fhirServerUrl: "http://hapi-server:8080/fhir"
