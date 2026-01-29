@@ -1,9 +1,9 @@
 {
   "jdbcDriverClass": "org.postgresql.Driver",
   "databaseService" : "postgresql",
-  "databaseHostName" : "hapi-fhir-db",
+  "databaseHostName" : "db.openelis.org",
   "databasePort" : "5432",
-  "databaseUser" : "admin",
-  "databasePassword" : "admin",
-  "databaseName" : "hapi"
+  "databaseUser" : "clinlims",
+  "databasePassword" : "clinlims",
+  "databaseName" : "clinlims"
 }

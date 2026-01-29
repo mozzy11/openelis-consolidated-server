@@ -18,24 +18,25 @@
 # of these options.
 # This config is meant to be used by `compose-controller-spark-sql.yaml`.
 fhirdata:
-  fhirFetchMode: "FHIR_SEARCH"
+  fhirFetchMode: "HAPI_JDBC"
+  dbConfig: "config/hapi-postgres-config_local.json"
   # 172.17.0.1 is an example docker network interface ip address;
   # `hapi-server` is another docker example where a container with that name is
   # running on the same docker network.
-  fhirServerUrl: "http://fhir.openelis.org:8081"
-  fhirServerUserName: "admin"
-  fhirServerPassword: "Admin123"
+  # fhirServerUrl: "http://fhir.openelis.org:8081"
+  # fhirServerUserName: "admin"
+  # fhirServerPassword: "adminADMIN!"
   # fhirServerUrl: "http://hapi-server:8080/fhir"
-  #dbConfig: "config/hapi-postgres-config_local.json"
+
   dwhRootPrefix: "/dwh/controller_DWH"
   generateParquetFiles: false
-  incrementalSchedule: "0 0 * * * *"
+  incrementalSchedule: "0 * * * * *"
   purgeSchedule: "0 30 * * * *"
   numOfDwhSnapshotsToRetain: 2
   # There is no Questionnaire in our test FHIR server, but it is added to
   # prevent regression of https://github.com/google/fhir-data-pipes/issues/785.
   # TODO: add resource table creation to e2e tests.
-  resourceList: "Patient,Encounter,Observation,Condition,Practitioner,Location,Immunization,MedicationRequest"
+  resourceList: "Patient,Practitioner,Encounter,Observation,Location,Organization,ServiceRequest,Specimen ,Task"
   numThreads: 1
   autoGenerateFlinkConfiguration: true
   createHiveResourceTables: false
@@ -48,9 +49,9 @@ fhirdata:
   viewDefinitionsDir: "config/views"
   createParquetViews: false
   sinkDbConfigPath: 
-  sinkFhirServerUrl: "http://openhim-core:5001/fhir/"
-  sinkUserName: "OpenMRS"
-  sinkPassword: "admin"
+  sinkFhirServerUrl: "http://host.docker.internal:8090/fhir/"
+  sinkUserName: "hapi"
+  sinkPassword: "hapi"
   recursiveDepth: 1
 
 # Enable spring boot actuator end points, use "*" to expose all endpoints, or a comma-separated

@@ -1,0 +1,4 @@
+configs/openelis/database/data/*
+configs/openelis/logs/oeLogs/*
+configs/openelis/logs/tomcatLogs/*
+configs/fhirpipes/dwh/*
