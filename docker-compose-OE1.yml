@@ -56,7 +56,7 @@ services:
             - DB_SUPERUSER_PASSWORD=${ADMIN_PASSWORD}   
         volumes:
               # preserves the database between containers
-            - db-data:/var/lib/postgresql/data                
+            - ./configs/openelis/database/data:/var/lib/postgresql/data                
 
         logging: *local-logging    
         networks:
@@ -171,7 +171,9 @@ services:
             - openelis-network
         logging: *local-logging    
         depends_on:
-            - certs    
+            - frontend.openelis.org  
+            - fhir.openelis.org
+            - oe.openelis.org 
    
     autoheal:
         container_name: autoheal-oe
@@ -185,8 +187,23 @@ services:
             TZ: America/New_York
         logging: *local-logging    
         volumes:
-            - /var/run/docker.sock:/var/run/docker.sock            
-            
+            - /var/run/docker.sock:/var/run/docker.sock  
+
+
+    #FHIR Pipeline
+    pipeline-controller:
+        image: us-docker.pkg.dev/cloud-build-fhir/fhir-analytics/main:0.6.0
+        container_name: pipeline-controller
+        platform: linux/amd64
+        volumes:
+           - ./configs/fhirpipes/config:/app/config:ro
+           - ./configs/fhirpipes/dwh:/dwh
+        environment:
+           - JAVA_OPTS=-Xms7g -Xmx7g
+        networks:
+            - openelis-network
+        ports:
+           - '8095:8080'         
 secrets: 
   common.properties:
     file:  ./configs/openelis/properties/common.properties 
@@ -200,7 +217,6 @@ networks:
         - subnet: 172.20.1.0/24  
         
 volumes:
-  db-data:
   key_trust-store-volume:
   certs-vol:
   keys-vol:

@@ -19,8 +19,8 @@ services:
             - spring.datasource.username=admin
             - spring.datasource.password=admin
             - spring.datasource.driverClassName=org.postgresql.Driver
-        networks:
-            - openelis-network
+        # networks:
+        #     - openelis-network
         volumes:
             - hapi-data:/data/hapi
 
@@ -34,29 +34,14 @@ services:
             POSTGRES_DB: 'hapi'
             POSTGRES_USER: 'admin'
             POSTGRES_PASSWORD: 'admin'
-        networks:
-            - openelis-network
+        # networks:
+        #     - openelis-network
         volumes:
             - hapi-fhir-db:/var/lib/postgresql/data
-
-   #FHIR Pipeline
-    pipeline-controller:
-        image: us-docker.pkg.dev/cloud-build-fhir/fhir-analytics/main:latest
-        container_name: pipeline-controller
-        platform: linux/amd64
-        volumes:
-           - ./configs/fhirpipes/config:/app/config:ro
-           - ./configs/fhirpipes/dwh:/dwh
-        environment:
-           - JAVA_OPTS=-Xms7g -Xmx7g
-        networks:
-            - openelis-network
-        ports:
-           - '8095:8080' 
-networks:
-  openelis-network:
-    name: openelis-network
-    external: true       
+# networks:
+#   openelis-network:
+#     name: openelis-network
+#     external: true       
         
 volumes:
   key_trust-store-volume:
