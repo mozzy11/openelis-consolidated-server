@@ -2,3 +2,8 @@ configs/openelis/database/data/*
 configs/openelis/logs/oeLogs/*
 configs/openelis/logs/tomcatLogs/*
 configs/fhirpipes/dwh/*
+
+configs/openelis/database/data2/*
+configs/openelis/logs/oeLogs2/*
+configs/openelis/logs/tomcatLogs2/*
+configs/fhirpipes/dwh2/*

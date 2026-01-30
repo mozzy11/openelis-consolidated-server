@@ -69,13 +69,13 @@ services:
             
     oe.openelis.org:
         container_name: openelisglobal-webapp 
-        image: itechuw/openelis-global-2:3.2.1.2 
+        image: itechuw/openelis-global-2:develop  
         platform: linux/amd64  
         depends_on:
             - db.openelis.org
             - certs
         ports:
-            - "8080:8080"
+            # - "8080:8080"
             - "8443:8443"
         restart: always
         networks:
@@ -111,9 +111,9 @@ services:
         container_name: external-fhir-api
         image: itechuw/openelis-global-2-fhir:3.2.1.2
         platform: linux/amd64
-        ports:
-            - "8081:8080"
-            - "8444:8443"
+        # ports:
+        #     - "8081:8080"
+        #     - "8444:8443"
         depends_on:
             - db.openelis.org
             - certs    
@@ -142,7 +142,7 @@ services:
             -  key_trust-store-volume:/etc/openelis-global 
        
     frontend.openelis.org:
-        image: itechuw/openelis-global-2-frontend:3.2.1.2
+        image: itechuw/openelis-global-2-frontend:develop 
         container_name: openelisglobal-front-end
         platform: linux/amd64
         networks:
@@ -202,6 +202,7 @@ services:
            - JAVA_OPTS=-Xms7g -Xmx7g
         networks:
             - openelis-network
+            - shr-pipeline-network
         ports:
            - '8095:8080'         
 secrets: 
@@ -214,7 +215,10 @@ networks:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.20.1.0/24  
+        - subnet: 172.20.1.0/24
+  shr-pipeline-network:
+    name: shr-pipeline-network
+    external: true  
         
 volumes:
   key_trust-store-volume:

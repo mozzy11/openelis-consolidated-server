@@ -19,8 +19,8 @@ services:
             - spring.datasource.username=admin
             - spring.datasource.password=admin
             - spring.datasource.driverClassName=org.postgresql.Driver
-        # networks:
-        #     - openelis-network
+        networks:
+            - shr-pipeline-network
         volumes:
             - hapi-data:/data/hapi
 
@@ -34,15 +34,15 @@ services:
             POSTGRES_DB: 'hapi'
             POSTGRES_USER: 'admin'
             POSTGRES_PASSWORD: 'admin'
-        # networks:
-        #     - openelis-network
         volumes:
             - hapi-fhir-db:/var/lib/postgresql/data
-# networks:
-#   openelis-network:
-#     name: openelis-network
-#     external: true       
-        
+        networks:
+            - shr-pipeline-network
+networks:
+  shr-pipeline-network:
+    name: shr-pipeline-network
+    external: true
+
 volumes:
   key_trust-store-volume:
   certs-vol:

@@ -1,0 +1,9 @@
+{
+  "jdbcDriverClass": "org.postgresql.Driver",
+  "databaseService" : "postgresql",
+  "databaseHostName" : "db2.openelis.org",
+  "databasePort" : "5432",
+  "databaseUser" : "clinlims",
+  "databasePassword" : "clinlims",
+  "databaseName" : "clinlims"
+}
