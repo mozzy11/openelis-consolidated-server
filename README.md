@@ -14,10 +14,10 @@ docker network create shr-pipeline-network
 
 This network enables communication between:
 - `shr-hapi-fhir` (SHR FHIR server from docker-compose.yml)
-- `pipeline-controller` (from docker-compose-OE1.yml)
-- `pipeline-controller2` (from docker-compose-OE2.yml)
+- `oe.openelis.org` (from docker-compose-OE1.yml)
+- `oe.openelis.org2` (from docker-compose-OE2.yml)
 
-With the external network in place, the pipeline controllers can connect to the SHR FHIR server using the container name:
+With the external network in place, the openelis instances can connect to the SHR FHIR server using the container name:
 - URL: `http://shr-hapi-fhir:8080/fhir/`
 
 ### Starting the Services
@@ -31,7 +31,7 @@ it can be accesed at http://localhost:8090/fhir/
 
 2. Start OpenELIS Instance 1:
 ```bash
-docker compose -f docker-compose-OE1.yml up -d proxy
+docker compose -f docker-compose-OE1.yml up -d 
 ```
 
 it can be accesed at https://localhost/
@@ -43,22 +43,6 @@ docker compose -f docker-compose-OE2.yml up -d proxy2
 
 it can be accesed at https://localhost:444/
 
-### Start the Pipelines 
 
-4. Start Pipeline Instance 1 for Sending FHIR data from OpenELIS instance 1 to the SHR:
-```bash
-docker compose -f docker-compose-OE1.yml up -d pipeline-controller
-```
-it can be accesed at http://localhost:8095
-
-4. Start Pipeline Instance 2 for Sending FHIR data from OpenELIS instance 2 to the SHR:
-```bash
-docker compose -f docker-compose-OE2.yml up -d pipeline-controller2
-```
-
-it can be accesed at http://localhost:8096
-
-
-Note : To run the Pipeline , Acces the Pipeline Controller in the UI ,First run the Full Pipeline (Batch mode) and the Incremental Pipeline (Streaming Mode)will start by default 
 
 

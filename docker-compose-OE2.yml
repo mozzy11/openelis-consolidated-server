@@ -81,6 +81,7 @@ services:
         networks:
           openelis-network2:
               ipv4_address: 172.30.1.121
+          shr-pipeline-network:    
         logging: *local-logging      
         environment:
             - DEFAULT_PW=adminADMIN! 
@@ -106,40 +107,6 @@ services:
             - ./configs/openelis/menu/menu_config.json:/var/lib/openelis-global/menu/menu_config.json
         secrets:
             - source: common.properties
-            
-    fhir2.openelis.org:
-        container_name: external-fhir-api2
-        image: itechuw/openelis-global-2-fhir:3.2.1.2
-        platform: linux/amd64
-        # ports:
-        #     - "8081:8080"
-        #     - "8444:8443"
-        depends_on:
-            - db2.openelis.org
-            - certs2    
-        networks:
-            - openelis-network2
-        restart: always
-        environment:
-        #   TZ: America/New_York
-
-          JAVA_OPTS: "-Djavax.net.ssl.trustStore=${SSL_TRUSTSTORE_PATH}
-                      -Djavax.net.ssl.trustStorePassword=${SSL_TRUSTSTORE_PASSWORD}
-                      -Djavax.net.ssl.trustStoreType=pkcs12
-                      -Djavax.net.ssl.keyStore=${SSL_KEYSTORE_PATH}
-                      -Djavax.net.ssl.keyStorePassword=${SSL_KEYSTORE_PASSWORD}
-                      -Djavax.net.ssl.keyStoreType=pkcs12"
-          # Config variables loaded through Tomacat server.xml            
-          CATALINA_OPTS: "-Dhapi.ssl.truststorepath=${SSL_TRUSTSTORE_PATH} -Dhapi.ssl.truststorepassword=${SSL_TRUSTSTORE_PASSWORD} -Dhapi.ssl.keystorepath=${SSL_KEYSTORE_PATH} -Dhapi.ssl.keystorepassword=${SSL_KEYSTORE_PASSWORD}"  
-          # Config variables loaded through Hapi application.yml
-          FHIR_DATASOURCE_URL : "jdbc:postgresql://db2.openelis.org:5432/clinlims?currentSchema=clinlims"
-          FHIR_DATASOURCE_USERNAME: "clinlims"
-          FHIR_DATASOURCE_PASSWORD: ${OE_DB_PASSWORD}
-          FHIR_SERVER_ADRESS: "http://fhir2.openelis.org:8080/fhir/"
-
-        logging: *local-logging                       
-        volumes:
-            -  key_trust-store-volume2:/etc/openelis-global 
        
     frontend2.openelis.org:
         image: itechuw/openelis-global-2-frontend:develop 
@@ -172,7 +139,6 @@ services:
         logging: *local-logging    
         depends_on:
             - frontend2.openelis.org 
-            - fhir2.openelis.org
             - oe2.openelis.org
    
     autoheal2:
@@ -189,22 +155,7 @@ services:
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock  
 
-
-    #FHIR Pipeline
-    pipeline-controller2:
-        image: us-docker.pkg.dev/cloud-build-fhir/fhir-analytics/main:0.6.0
-        container_name: pipeline-controller2
-        platform: linux/amd64
-        volumes:
-           - ./configs/fhirpipes/config2:/app/config:ro
-           - ./configs/fhirpipes/dwh2:/dwh
-        environment:
-           - JAVA_OPTS=-Xms7g -Xmx7g
-        networks:
-            - openelis-network2
-            - shr-pipeline-network
-        ports:
-           - '8096:8080'         
+        
 secrets: 
   common.properties:
     file:  ./configs/openelis/properties/common2.properties 
