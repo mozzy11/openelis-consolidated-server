@@ -38,7 +38,7 @@ it can be accesed at https://localhost/
 
 3. Start OpenELIS Instance 2:
 ```bash
-docker compose -f docker-compose-OE2.yml up -d proxy2
+docker compose -f docker-compose-OE2.yml up -d 
 ```
 
 it can be accesed at https://localhost:444/
