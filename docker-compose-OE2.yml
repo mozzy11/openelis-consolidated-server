@@ -121,7 +121,7 @@ services:
             - openelis-network2
         restart: always
         environment:
-          TZ: America/New_York
+        #   TZ: America/New_York
 
           JAVA_OPTS: "-Djavax.net.ssl.trustStore=${SSL_TRUSTSTORE_PATH}
                       -Djavax.net.ssl.trustStorePassword=${SSL_TRUSTSTORE_PASSWORD}
